@@ -7,7 +7,8 @@ import {
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorUIProps } from './type';
 import { TConstructorIngredient } from '@utils-types';
-import { BurgerConstructorElement, Modal } from '@components';
+import { BurgerConstructorElement } from '@components';
+import { Modal } from '../../modal/modal';
 import { Preloader, OrderDetailsUI } from '@ui';
 
 export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
