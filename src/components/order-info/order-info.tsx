@@ -66,10 +66,14 @@ export const OrderInfo: FC = () => {
   }, [orderData, ingredients]);
 
   useEffect(() => {
-    getOrderByNumberApi(Number(id)).then((data) => {
-      setOrderData(data.orders[0]);
-    });
-  }, []);
+    getOrderByNumberApi(Number(id))
+      .then((data) => {
+        setOrderData(data.orders[0]);
+      })
+      .catch((error) => {
+        console.error('Ошибка при получении данных заказа:', error);
+      });
+  }, [id]);
 
   if (!orderInfo) {
     return <Preloader />;
