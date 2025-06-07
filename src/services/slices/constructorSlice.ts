@@ -35,18 +35,13 @@ export const constructorSlice = createSlice({
         payload: { ...ingredient, id: uuidv4() }
       })
     },
-    // removeIngredient: (state, action) => {
-    //   const indexToRemove = state.ingredients.findIndex(
-    //     (ingredient) => ingredient._id === action.payload
-    //   );
-    //   if (indexToRemove !== -1) {
-    //     state.ingredients.splice(indexToRemove, 1);
-    //   }
-    // },
     removeIngredient: (state, action) => {
-      state.ingredients = state.ingredients.filter(
-        (ingredient) => ingredient._id !== action.payload
+      const indexToRemove = state.ingredients.findIndex(
+        (ingredient) => ingredient._id === action.payload
       );
+      if (indexToRemove !== -1) {
+        state.ingredients.splice(indexToRemove, 1);
+      }
     },
     moveIngredientUp: (state, action: PayloadAction<number>) => {
       const index = action.payload;
