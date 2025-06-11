@@ -33,8 +33,7 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       setCookie('accessToken', refreshData.accessToken);
       return refreshData;
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export const fetchWithRefresh = async <T>(
   url: RequestInfo,
@@ -78,8 +77,7 @@ export const getIngredientsApi = () =>
     .then((data) => {
       if (data?.success) return data.data;
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export const getFeedsApi = () =>
   fetch(`${URL}/orders/all`)
@@ -87,8 +85,7 @@ export const getFeedsApi = () =>
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export const getOrdersApi = () =>
   fetchWithRefresh<TFeedsResponse>(`${URL}/orders`, {
@@ -97,12 +94,10 @@ export const getOrdersApi = () =>
       'Content-Type': 'application/json;charset=utf-8',
       authorization: getCookie('accessToken')
     } as HeadersInit
-  })
-    .then((data) => {
-      if (data?.success) return data.orders;
-      return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+  }).then((data) => {
+    if (data?.success) return data.orders;
+    return Promise.reject(data);
+  });
 
 export type TNewOrderResponse = TServerResponse<{
   order: TOrder;
@@ -119,12 +114,10 @@ export const orderBurgerApi = (data: string[]) =>
     body: JSON.stringify({
       ingredients: data
     })
-  })
-    .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+  }).then((data) => {
+    if (data?.success) return data;
+    return Promise.reject(data);
+  });
 
 type TOrderResponse = TServerResponse<{
   orders: TOrder[];
@@ -136,9 +129,7 @@ export const getOrderByNumberApi = (number: number) =>
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-    .then((res) => checkResponse<TOrderResponse>(res))
-    .catch((err) => Promise.reject(err));
+  }).then((res) => checkResponse<TOrderResponse>(res));
 
 export type TRegisterData = {
   email: string;
@@ -168,8 +159,7 @@ export const registerUserApi = (data: TRegisterData) =>
         return data;
       }
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export type TLoginData = {
   email: string;
@@ -192,8 +182,7 @@ export const loginUserApi = (data: TLoginData) =>
         return data;
       }
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export const forgotPasswordApi = (data: { email: string }) =>
   fetch(`${URL}/password-reset`, {
@@ -207,8 +196,7 @@ export const forgotPasswordApi = (data: { email: string }) =>
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 export const resetPasswordApi = (data: { password: string; token: string }) =>
   fetch(`${URL}/password-reset/reset`, {
@@ -222,8 +210,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });
 
 type TUserResponse = TServerResponse<{ user: TUser }>;
 
@@ -232,7 +219,7 @@ export const getUserApi = () =>
     headers: {
       authorization: getCookie('accessToken')
     } as HeadersInit
-  }).catch((err) => Promise.reject(err));
+  });
 
 export const updateUserApi = (user: Partial<TRegisterData>) =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
@@ -242,7 +229,7 @@ export const updateUserApi = (user: Partial<TRegisterData>) =>
       authorization: getCookie('accessToken')
     } as HeadersInit,
     body: JSON.stringify(user)
-  }).catch((err) => Promise.reject(err));
+  });
 
 export const logoutApi = () =>
   fetch(`${URL}/auth/logout`, {
@@ -261,5 +248,4 @@ export const logoutApi = () =>
         return data;
       }
       return Promise.reject(data);
-    })
-    .catch((err) => Promise.reject(err));
+    });

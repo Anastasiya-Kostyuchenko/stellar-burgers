@@ -2,7 +2,7 @@ import { useSelector } from '../../services/store';
 import {
   getIsAuthCheckedSelector,
   getUserSelector
-} from '../../services/slices/userSlice';
+} from '../../services/slices/user/userSlice';
 import { Navigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Preloader } from '@ui';
@@ -18,7 +18,7 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const user = useSelector(getIsAuthCheckedSelector);
   const location = useLocation();
-  const [isLoadind, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -28,7 +28,7 @@ export const ProtectedRoute = ({
     return () => clearTimeout(delay);
   }, []);
 
-  if (isLoadind) {
+  if (isLoading) {
     return <Preloader />;
   }
 

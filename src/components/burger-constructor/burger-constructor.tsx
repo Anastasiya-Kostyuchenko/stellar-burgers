@@ -5,14 +5,14 @@ import { useSelector, useDispatch } from '../../services/store';
 import {
   clearAll,
   getConstructorSelector
-} from '../../services/slices/constructorSlice';
+} from '../../services/slices/constructor/constructorSlice';
 import {
   clearOrder,
   getOrderDetails,
   getOrderState
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/order/orderSlice';
 import { useNavigate } from 'react-router-dom';
-import { getIsAuthCheckedSelector } from '../../services/slices/userSlice';
+import { getIsAuthCheckedSelector } from '../../services/slices/user/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */

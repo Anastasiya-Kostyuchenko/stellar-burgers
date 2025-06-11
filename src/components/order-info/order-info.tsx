@@ -4,7 +4,7 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { useSelector } from '../../services/store';
-import { getIngredientState } from '../../services/slices/ingredientSlice';
+import { getIngredientState } from '../../services/slices/ingredients/ingredientSlice';
 import { getOrderByNumberApi } from '@api';
 
 export const OrderInfo: FC = () => {
@@ -66,12 +66,12 @@ export const OrderInfo: FC = () => {
   }, [orderData, ingredients]);
 
   useEffect(() => {
-    getOrderByNumberApi(Number(id))
+    getOrderByNumberApi(id)
       .then((data) => {
         setOrderData(data.orders[0]);
       })
-      .catch((error) => {
-        console.error('Ошибка при получении данных заказа:', error);
+      .catch((err) => {
+        console.error('Ошибка при загрузке заказа:', err);
       });
   }, [id]);
 

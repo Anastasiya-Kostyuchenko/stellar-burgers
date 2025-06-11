@@ -13,19 +13,13 @@ import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
-import {
-  AppHeader,
-  IngredientDetails,
-  // Modal,
-  OrderInfo
-  // ProtectedRoute
-} from '@components';
+import { AppHeader, IngredientDetails, OrderInfo } from '@components';
 import { Modal } from '../modal/modal';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
-import { getIngredients } from '../../services/slices/ingredientSlice';
-import { getUser } from '../../services/slices/userSlice';
+import { getIngredients } from '../../services/slices/ingredients/ingredientSlice';
+import { getUser } from '../../services/slices/user/userSlice';
 import { FeedModal } from '../feed-modal';
 
 const App = () => {

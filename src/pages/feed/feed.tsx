@@ -2,7 +2,7 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC } from 'react';
-import { getFeedOrder, getFeeds } from '../../services/slices/feedSlice';
+import { getFeedOrder, getFeeds } from '../../services/slices/feed/feedSlice';
 import { useSelector, useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 
