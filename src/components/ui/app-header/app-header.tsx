@@ -1,110 +1,67 @@
 import React, { FC } from 'react';
+import styles from './app-header.module.css';
+import { TAppHeaderUIProps } from './type';
 import {
-  Button,
-  ConstructorElement,
-  CurrencyIcon
+  BurgerIcon,
+  ListIcon,
+  Logo,
+  ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
-import styles from './burger-constructor.module.css';
-import { BurgerConstructorUIProps } from '../burger-constructor/type';
-import { TConstructorIngredient } from '@utils-types';
-import { BurgerConstructorElement } from '@components';
-import { Modal } from '../../modal/modal';
-import { Preloader, OrderDetailsUI } from '@ui';
+import { NavLink } from 'react-router-dom';
 
-export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
-  constructorItems,
-  orderRequest,
-  price,
-  orderModalData,
-  onOrderClick,
-  closeOrderModal
-}) => (
-  <section className={styles.burger_constructor}>
-    {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
-        <ConstructorElement
-          type='top'
-          isLocked
-          text={`${constructorItems.bun.name} (верх)`}
-          price={constructorItems.bun.price}
-          thumbnail={constructorItems.bun.image}
-        />
-      </div>
-    ) : (
-      <div
-        data-cy='top'
-        className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
-      >
-        Выберите булки
-      </div>
-    )}
-    <ul className={styles.elements}>
-      {constructorItems.ingredients.length > 0 ? (
-        constructorItems.ingredients.map(
-          (item: TConstructorIngredient, index: number) => (
-            <BurgerConstructorElement
-              ingredient={item}
-              index={index}
-              totalItems={constructorItems.ingredients.length}
-              key={item.id}
-            />
-          )
-        )
-      ) : (
-        <div
-          data-cy='mid'
-          className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}
+export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
+  <header className={styles.header}>
+    <nav className={`${styles.menu} p-4`}>
+      <div className={styles.menu_part_left}>
+        <NavLink
+          to={'/'}
+          className={({ isActive }) =>
+            `${styles.link} ${isActive ? styles.link_active : ''}`
+          }
         >
-          Выберите начинку
-        </div>
-      )}
-    </ul>
-    {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`}>
-        <ConstructorElement
-          type='bottom'
-          isLocked
-          text={`${constructorItems.bun.name} (низ)`}
-          price={constructorItems.bun.price}
-          thumbnail={constructorItems.bun.image}
-        />
+          {({ isActive }) => (
+            <>
+              <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className='text text_type_main-default ml-2 mr-10'>
+                Конструктор
+              </p>
+            </>
+          )}
+        </NavLink>
+        <NavLink
+          to={'/feed'}
+          className={({ isActive }) =>
+            `${styles.link} ${isActive ? styles.link_active : ''}`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <ListIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className='text text_type_main-default ml-2'>Лента заказов</p>
+            </>
+          )}
+        </NavLink>
       </div>
-    ) : (
-      <div
-        data-cy='bottom'
-        className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
-      >
-        Выберите булки
+      <div className={styles.logo}>
+        <Logo className='' />
       </div>
-    )}
-    <div className={`${styles.total} mt-10 mr-4`}>
-      <div className={`${styles.cost} mr-10`}>
-        <p className={`text ${styles.text} mr-2`}>{price}</p>
-        <CurrencyIcon type='primary' />
+      <div className={styles.link_position_last}>
+        <NavLink
+          to={'/profile'}
+          className={({ isActive }) =>
+            `${styles.link} ${isActive ? styles.link_active : ''}`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className='text text_type_main-default ml-2'>
+                {userName || 'Личный кабинет'}
+              </p>
+            </>
+          )}
+        </NavLink>
       </div>
-      <Button
-        htmlType='button'
-        type='primary'
-        size='large'
-        children='Оформить заказ'
-        onClick={onOrderClick}
-        data-cy='onOrderClick'
-      />
-    </div>
-
-    {orderRequest && (
-      <Modal onClose={closeOrderModal} title={'Оформляем заказ...'}>
-        <Preloader />
-      </Modal>
-    )}
-
-    {orderModalData && (
-      <Modal
-        onClose={closeOrderModal}
-        title={orderRequest ? 'Оформляем заказ...' : ''}
-      >
-        <OrderDetailsUI orderNumber={orderModalData.number} />
-      </Modal>
-    )}
-  </section>
+    </nav>
+  </header>
 );
